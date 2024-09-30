@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  font-family: 'Plusjakartadisplay', sans-serif;
+  background-color: #fafafa;
+  scroll-behavior: smooth;
+}
+
+#WhyUs::before{
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 3px;
+  width: 28px;
+  height: 1.5px;
+  background-color: #00cc88;
+}
+
+.text-shadow{
+  text-shadow: 0 1.5px 1px #000;
+}
+
+#contact::before, #about-us::before, #discription::before{
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 3px;
+  width: 23px;
+  height: 2px;
+  background-color: #00cc88;
+}
+
+#discription::before{
+  top:18px;
+  width: 40px;
+  height: 2.5px;
+}
+
+#dropdownMenuItem:hover img{
+  transform: scale(1.1);
+  transition: .2s;
+}
+
+#Products #dropdownarrow {
+  transition: 0.3s ease-in-out;
+}
+
+
+#Products:hover #dropdownarrow {
+  rotate: 180deg;
+  transition: .3s ease-in-out;
+}
+
+#dropdownMenuItem:hover #arrow,
+#productID:hover #arrow,
+#arrow-anime:hover #arrow {
+  transform: translateX(3px);
+  transition: .2s;
+}
+
+#dropdown {
+  animation: anime .3s ease-in-out;
+}
+
+#input1:focus + #svg1{
+  display: none;
+}
+#input2:focus + #svg2{
+  display: none;
+}
+#input3:focus + #svg3{
+  display: none;
+}
+
+.scrollbar::-webkit-scrollbar{
+  scrollbar-width: none;
+}
+
+@keyframes anime {
+  from {
+    transform: scale(.99);
+  }
+  to {
+    transform: scale(1);
+  }
+}

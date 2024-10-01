@@ -61,7 +61,7 @@ export default function Products(props) {
         .map((product, idx) => (
           <div key={idx} className="lg:w-[225px] lg:max-h-[350px]">
             <Link
-              href="/products/productDetail"
+              href={`/products/${product.ProductID}`}
               id="arrow-anime"
               className="flex py-5 px-5 w-[85vw] lg:w-auto lg:h-[100%] overflow-hidden lg:px-3 hover:scale-[1.03] flex-col lg:items-center border-[#eff0f6] bg-white shadow-[0_8px_20px_#080f340f] lg:py-0 border border-solid rounded-3xl duration-300 ease-in-out"
             >

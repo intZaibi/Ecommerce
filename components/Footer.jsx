@@ -23,14 +23,14 @@ export default function Footer() {
                   src="/paypalIcon.svg"
                   width={50}
                   height={50}
-                  alt="main img"
+                  alt="paypal logo"
                   className="w-auto h-auto"
                 />
                 <Image
                   src="/master-card-badge-shop-x-webflow-template.svg"
                   width={50}
                   height={50}
-                  alt="main img"
+                  alt="master card logo"
                   className="w-auto h-auto"
                 />
                 <div className="w-12">
@@ -38,7 +38,7 @@ export default function Footer() {
                     src="/payment-shop-pay.svg"
                     width={10}
                     height={50}
-                    alt="main img"
+                    alt="payment-shop-pay logo"
                     className="h-auto w-auto"
                   />
                 </div>
@@ -78,8 +78,8 @@ export default function Footer() {
               <div className="relative flex items-center justify-center w-full max-w-[24rem]">
                 <input
                   type="email"
-                  minlength="11"
-                  maxlength="30"
+                  minLength="11"
+                  maxLength="30"
                   className="pl-5 pr-36 w-[350px] h-[67px] focus:outline-[#0a0a0a7a] hover:border-[#0a0a0a7a] duration-300 border border-[#0a0a0a1a] flex justify-between items-center shadow-[0_1px_18px_#0a0a0a1d] rounded-full"
                   placeholder="Email Address"
                 />

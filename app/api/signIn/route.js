@@ -7,7 +7,7 @@ export async function POST(req) {
 
   const token = jwt.sign(
     { userId: user.uid},
-    "enc",
+    process.env.SESSION_SECRET,
     { expiresIn: '15s' }
   );
 
@@ -15,7 +15,6 @@ export async function POST(req) {
     name: 'token',
     value: token,
     httpOnly: false,
-    secure: process.env.NODE_ENV !== 'development',
     maxAge: 60*10, // 15 seconds
     sameSite: 'strict',
     path: '/'

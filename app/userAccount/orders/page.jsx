@@ -2,14 +2,53 @@
 
 import Orders from '@/components/Orders'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Bars3Icon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { signOut } from 'firebase/auth';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { auth } from '@/app/utils/firebase';
 
 export default function Account() {
 
-  const openDropdown = (e) => {
+  const [user] = useAuthState(auth)
+  const [token, setToken] = useState(null)
+
+  useEffect(() => {
+    const res = Cookies.get('token');
+    setToken(res)
+
+  }, [])
+  
+  const router = useRouter()
+  console.log(token)
+
+  
+  if (!user && !token) {
+    router.push("./auth/signIn")
+  }
+
+  const toggleDropdown = () => {
     const dropdown = document.querySelector("#dropdown");
-    // console.log(dropdown);
+    dropdown.classList.toggle("hidden");
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      await axios.get("http://localhost:3000/api/signIn")
+      toast.success('You have successfully signed out');
+      router.push('./auth/signIn')
+    } catch (error) {
+      console.error('Error signing out:', error.message);
+    }
+  };
+
+  const openDropdown = () => {
+    const dropdown = document.querySelector("#dropdown");
     if (dropdown.classList.contains("hidden"))
       dropdown.classList.remove("hidden");
     dropdown.classList.add("flex");
@@ -42,7 +81,7 @@ export default function Account() {
         id="cart"
         className="flex justify-center items-center"
       >
-        <div className='py-5 flex items-center cursor-pointer' onMouseOver={openDropdown} onMouseLeave={closeDropdown}>
+        <div className='py-5 flex items-center cursor-pointer' onClick={toggleDropdown} onMouseOver={openDropdown} onMouseLeave={closeDropdown}>
           <Link href="/login" className='flex items-center justify-center text-blue-gray-800'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="#eeeeee" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="size-10">
             <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -52,7 +91,7 @@ export default function Account() {
             <Link href="/userAccount/profile" className="flex  w-full justify-center">
               Profile
             </Link>
-            <button className="flex text-red-500  w-full justify-center">
+            <button onClick={handleSignOut} className="flex text-red-500  w-full justify-center">
               Log out
             </button>
           </div>

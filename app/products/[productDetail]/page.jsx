@@ -5,8 +5,13 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useContext } from 'react';
+import { CartContext } from '../../context/Cartcontext';
 
 export default function ProductDetail({params}) {
+
+  const { addToCart, isItemExistInCart } = useContext(CartContext);
+  const [alreadyExist, setAlreadyExist] = useState(false)
 
   const [currentProductID] = useState(params.productDetail)
 
@@ -64,7 +69,7 @@ export default function ProductDetail({params}) {
                   <label htmlFor={`memoryVariantBtn${i}`} key={i}>
                     <input type="radio" name="memoryVariant" id={`memoryVariantBtn${i}`} className="w-9 peer sr-only"/>
                       <div className="inline peer-checked:bg-black peer-checked:text-white py-4 rounded-full px-7 mr-4 shadow-lg shadow-[#080f343a]">
-                      {item}
+                      {item}GB
                       </div>
                   </label>
                 ))}
@@ -75,7 +80,7 @@ export default function ProductDetail({params}) {
                   <label htmlFor={`RAMBtn${i}`} key={i}>
                     <input type="radio" name='RAMBtn' id={`RAMBtn${i}`} className="w-9 peer sr-only"/>
                       <div className="inline peer-checked:bg-black peer-checked:text-white py-4 rounded-full px-7 mr-4 shadow-lg shadow-[#080f343a]">
-                      {item}
+                      {item}GB
                       </div>
                   </label>
                 ))}
@@ -93,9 +98,10 @@ export default function ProductDetail({params}) {
               </fieldset>
               
               <div className="flex gap-3 flex-col lg:flex-row">
-              <button className="inline bg-[#00cc88] shadow-[#00cc894f] shadow-lg hover:shadow-xl hover:shadow-[#00cc895d] px-2 py-5 rounded-full w-full lg:w-44 text-lg text-white hover:-translate-y-1 duration-300 ease-out">
+              <button onClick={() => {isItemExistInCart? setAlreadyExist(isItemExistInCart) :addToCart(product) }} className="inline bg-[#00cc88] shadow-[#00cc894f] shadow-lg hover:shadow-xl hover:shadow-[#00cc895d] px-2 py-5 rounded-full w-full lg:w-44 text-lg text-white hover:-translate-y-1 duration-300 ease-out">
                 Add to cart
               </button>
+                <p className={`text-red-400 text-lg ${alreadyExist? "inline-block": "hidden"}`} >Item already exist in your cart.</p>
               <button className="inline text-[#00cc88] shadow-[#080f340f] shadow-lg hover:shadow-xl hover:shadow-[#080f341f] px-2 py-5 rounded-full w-full lg:w-44 text-lg bg-white hover:-translate-y-1 duration-300 ease-out">
                 Buy it now
               </button>

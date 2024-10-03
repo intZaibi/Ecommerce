@@ -13,20 +13,15 @@ export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [itemsInCart, setItemsInCart] = useState(0);
 
-  const openDropdown = (e) => {
-    const dropdown = document.querySelector("#dropdown");
-    // console.log(dropdown);
-    if (dropdown.classList.contains("hidden"))
-      dropdown.classList.remove("hidden");
-    dropdown.classList.add("flex");
-  };
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [IsCartOpen, setIsCartOpen] = useState(false)
 
-  const closeDropdown = () => {
-    const dropdown = document.querySelector("#dropdown");
-    if (!dropdown.classList.contains("hidden"))
-      dropdown.classList.remove("flex");
-    dropdown.classList.add("hidden");
-  };
+  const openDropdown = () => setDropdownOpen(true);
+  const closeDropdown = () => setDropdownOpen(false);
+  
+  // const [cartOpen, setCartOpen] = useState(props.IsCartOpen);  // Initially open
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
 
   return (
     <>
@@ -55,8 +50,9 @@ export default function Example() {
             <ChevronDownIcon id="dropdownarrow" className="mt-0.5 text-black size-5" />
             <div
               id="dropdown"
-              className="pl-7 py-10 w-96 top-[3.2rem] flex-col gap-8 rounded-[0_16px_16px_16px] bg-white shadow-[0_40px_20px_#080f341a] absolute hidden z-10"
+              className={`pl-7 py-10 w-96 top-[3.2rem] flex-col gap-8 rounded-[0_16px_16px_16px] bg-white shadow-[0_40px_20px_#080f341a] absolute z-10 ${dropdownOpen ? "flex" : "hidden"}`}
             >
+
               <h1 className="font-semibold text-lg">Discover our categories</h1>
               <div id="dropdownMenuItem" className="flex items-center">
                 <div className="w-16 h-16 rounded-xl mr-4 bg-[#FEE0E1]">
@@ -141,13 +137,14 @@ export default function Example() {
           id="loginBtn"
           className="flex justify-center items-center hover:bg-[#00cc89] shadow-[0_8px_18px_#080f340f] ml-20 lg:ml-0 p-2.5 rounded-xl w-14 h-14 text-black hover:text-white duration-200"
         >
-          <Link href="/userAccount/login/signIn">
+          <Link href="/userAccount/auth/signIn">
             <FontAwesomeIcon icon={faUser} className="w-7 h-7" />
           </Link>
         </div>
 
         <div
           id="cart"
+          onClick={openCart}
           className="relative cursor-pointer flex justify-center items-center hover:bg-[#00cc89] shadow-[0_8px_18px_#080f340f] pt-1 rounded-xl w-14 h-14 text-[#00cc89] hover:text-white duration-200"
         >
             <FontAwesomeIcon icon={faCartShopping} className="w-7 h-7" />
@@ -173,7 +170,7 @@ export default function Example() {
         </div>
       </nav>
     </header>
-    <Cart />
+    <Cart IsCartOpen={IsCartOpen} closeCart={closeCart}/>
     </>
   );
 }

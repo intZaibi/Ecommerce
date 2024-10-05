@@ -6,15 +6,13 @@ import Footer from '@/components/Footer'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useContext } from 'react';
-import { CartContext } from '../../context/Cartcontext';
+import { CartContext } from '@/app/context/Cartcontext';
 
 export default function ProductDetail({params}) {
 
   const { addToCart, isItemExistInCart } = useContext(CartContext);
-  const [alreadyExist, setAlreadyExist] = useState(false)
-
+  
   const [currentProductID] = useState(params.productDetail)
-
   const [product, setProduct] = useState({});
 
   useEffect(() => {
@@ -31,6 +29,11 @@ export default function ProductDetail({params}) {
     fetchProducts();
   
   }, [])
+
+  const handleAddToCart = (product) => {
+      addToCart(product);
+  };
+  
   
 
   return (
@@ -98,10 +101,10 @@ export default function ProductDetail({params}) {
               </fieldset>
               
               <div className="flex gap-3 flex-col lg:flex-row">
-              <button onClick={() => {isItemExistInCart? setAlreadyExist(isItemExistInCart) :addToCart(product) }} className="inline bg-[#00cc88] shadow-[#00cc894f] shadow-lg hover:shadow-xl hover:shadow-[#00cc895d] px-2 py-5 rounded-full w-full lg:w-44 text-lg text-white hover:-translate-y-1 duration-300 ease-out">
+              <button onClick={() => { handleAddToCart(product) }} className="inline bg-[#00cc88] shadow-[#00cc894f] shadow-lg hover:shadow-xl hover:shadow-[#00cc895d] px-2 py-5 rounded-full w-full lg:w-44 text-lg text-white hover:-translate-y-1 duration-300 ease-out">
                 Add to cart
               </button>
-                <p className={`text-red-400 text-lg ${alreadyExist? "inline-block": "hidden"}`} >Item already exist in your cart.</p>
+                <p className={`text-red-400 text-lg ${isItemExistInCart(product.ProductID)? "inline-block": "hidden"}`} >Item already exist in your cart.</p>
               <button className="inline text-[#00cc88] shadow-[#080f340f] shadow-lg hover:shadow-xl hover:shadow-[#080f341f] px-2 py-5 rounded-full w-full lg:w-44 text-lg bg-white hover:-translate-y-1 duration-300 ease-out">
                 Buy it now
               </button>

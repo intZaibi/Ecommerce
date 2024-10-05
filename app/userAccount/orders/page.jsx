@@ -2,7 +2,7 @@
 
 import Orders from '@/components/Orders'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Bars3Icon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
@@ -15,17 +15,10 @@ import { auth } from '@/app/utils/firebase';
 export default function Account() {
 
   const [user] = useAuthState(auth)
-  const [token, setToken] = useState(null)
 
-  useEffect(() => {
-    const res = Cookies.get('token');
-    setToken(res)
-
-  }, [])
+  const token = Cookies.get('token');
   
   const router = useRouter()
-  console.log(token)
-
   
   if (!user && !token) {
     router.push("./auth/signIn")

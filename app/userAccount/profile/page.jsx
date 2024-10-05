@@ -7,7 +7,7 @@ import { signOut } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth'
 import Cookies from 'js-cookie';
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
@@ -15,21 +15,14 @@ import axios from 'axios';
 export default function Profile() {
 
   const [user] = useAuthState(auth)
-  const [token, setToken] = useState(null)
 
-  useEffect(() => {
-    const res = Cookies.get('token');
-    setToken(res)
-
-  }, [])
+    const token = Cookies.get('token');
+    if (!user && !token) {
+      console.log(token)
+      router.push("./auth/signIn")
+    }
   
   const router = useRouter()
-  console.log(token)
-
-  
-  if (!user && !token) {
-    router.push("./auth/signIn")
-  }
 
   const openDropdown = () => {
     const dropdown = document.querySelector("#dropdown");
@@ -56,7 +49,7 @@ export default function Profile() {
     try {
       await signOut(auth);
       await axios.get("http://localhost:3000/api/signIn")
-      toast('You have successfully signed out');
+      toast.success('You have successfully signed out');
       router.push('./auth/signIn')
     } catch (error) {
       console.error('Error signing out:', error.message);

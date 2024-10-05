@@ -5,15 +5,11 @@ import { useContext } from 'react';
 import { CartContext } from '../app/context/Cartcontext';
 
 export default function Cart({ IsCartOpen, closeCart }) {
-  const { cartItems, isItemExistInCart, incrementQuantity, decrementQuantity, removeFromCart } = useContext(CartContext);
-  const [quantity, setQuantity] = useState(1);
-
-  const handleIncrement = () => setQuantity(quantity + 1);
-  const handleDecrement = () => setQuantity(Math.max(1, quantity - 1)); // Prevent going below 1
+  const { cartItems, addToCart, removeProduct, incrementQuantity, decrementQuantity, isItemExistInCart } = useContext(CartContext);
 
   return (
     <div
-      className={`fixed h-[100vh] ${IsCartOpen ? "block" : "hidden"} overflow-hidden overflow-y-scroll z-10 min-w-[35vw] py-14 px-2 shadow-[0_8px_20px_#080f342f] bg-[#fcfcfc] top-0 right-0 min-h-screen`}
+      className={`fixed h-[100vh] ${IsCartOpen ? "block" : "hidden"} overflow-hidden scrollbar overflow-y-scroll z-10 min-w-[35vw] py-14 px-2 shadow-[0_8px_20px_#080f342f] bg-[#fcfcfc] top-0 right-0 min-h-screen`}
     >
       <div className="flex justify-between px-5 items-center">
         <h1 className="text-2xl font-bold">Your Cart</h1>
@@ -32,7 +28,7 @@ export default function Cart({ IsCartOpen, closeCart }) {
           <div key={item.ProductID} className="mb-10 flex">
             <div className="left h-full px-4">
               <Image
-                src="/SamsungGalaxyA50-A.webp"
+                src={`${item.ImageURLs[0]}`}
                 width={100}
                 height={100}
                 className="min-w-32 min-h-24 rounded-[30px] "
@@ -41,7 +37,7 @@ export default function Cart({ IsCartOpen, closeCart }) {
             </div>
             <div className="right">
               <h2 className="mb-[10px] font-bold text-xl sm:leading-none md:leading-none lg:leading-[1.10]">
-                Samsung Galaxy A50 2019
+                {item.ProductName}
               </h2>
               <div className="flex flex-col gap-1.5">
                 <p className="font-medium ">$ {item.Price}</p>
@@ -54,11 +50,11 @@ export default function Cart({ IsCartOpen, closeCart }) {
                 <p>
                   Color: <span className="font-medium">{item.Color}</span>
                 </p>
-                <button onClick={() => removeFromCart(product.ProductID)} className="cursor-pointer self-start text-red-600">
+                <button onClick={() => removeProduct(item.ProductID)} className="cursor-pointer self-start text-red-600">
                   Delete
                 </button>
               </div>
-              <button onClick={() => decrementQuantity(item.id)} className="py-1.5 w-8 bg-gray-300">
+              <button onClick={() => decrementQuantity(item.ProductID)} className="py-1.5 w-8 bg-gray-300">
                 -
               </button>
               <input
@@ -67,17 +63,17 @@ export default function Cart({ IsCartOpen, closeCart }) {
                 value={item.quantity}
               />
               <button
-                onClick={() => incrementQuantity(item.id)}
+                onClick={() => incrementQuantity(item.ProductID)}
                 className="py-1.5 w-8 bg-gray-300 font-body"
               >
                 +
               </button>
             </div>
           </div>
-            ))}
+          ))}
         </>
       ) : (
-        <p>Your cart is empty.</p>
+        <p className="my-16 text-center text-xl">Your cart is empty.</p>
       )}
       <hr className="border-gray-400 mt-5 mb-16" />
       <div className="px-6">

@@ -4,7 +4,6 @@ import { auth } from '../../../utils/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import jwt from 'jsonwebtoken';
 import axios from 'axios';
 
 export default function SignIn() {

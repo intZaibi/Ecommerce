@@ -23,7 +23,7 @@ export default function ProductPage() {
           className="w-full bg-[url('/Accessories.webp')] mb-10 bg-cover bg-no-repeat flex justify-center items-center lg:h-64 h-36 rounded-[32px]"
         >
           <h1 className="text-center text-3xl lg:text-5xl font-bold text-shadow text-white">
-            Accessories
+            Products
           </h1>
         </div>
 

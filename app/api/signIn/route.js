@@ -8,14 +8,13 @@ export async function POST(req) {
   const token = jwt.sign(
     { userId: user.uid},
     process.env.SESSION_SECRET,
-    { expiresIn: '15s' }
   );
 
   cookies().set({
     name: 'token',
     value: token,
     httpOnly: false,
-    maxAge: 60*10, // 15 seconds
+    maxAge: 60*10,
     sameSite: 'strict',
     path: '/'
   });

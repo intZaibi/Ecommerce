@@ -1,18 +1,23 @@
 'use client';
 
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [isMountedOnce, setIsMountedOnce] = useState(false);
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
-      const itemExists = prevItems.find((item) => item.id === product.id);
-  
-      if (!itemExists) {
+      const itemExist = prevItems.some((item) => item.ProductID === product.ProductID);
+      if (!itemExist) {
+        toast.success("Product added to cart!")
         return [...prevItems, { ...product, quantity: 1 }];
+      } else {
+        toast.error("Item already exist")
+        return [...prevItems]
       }
     });
   };
@@ -43,13 +48,23 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  const isItemExistInCart = (productId) => {
-    console.log(cartItems)
-    // return cartItems.find(item => item.ProductID === productId);
-  };
+  useEffect(() => {
+    if (isMountedOnce) {
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+    }
+  }, [cartItems]);
+  
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem('cart');
+    if (storedCartItems) {
+      setCartItems(JSON.parse(storedCartItems));
+    }
+    setIsMountedOnce(true)
+  }, []);
+  
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeProduct, incrementQuantity, decrementQuantity, isItemExistInCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeProduct, incrementQuantity, decrementQuantity }}>
       {children}
     </CartContext.Provider>
   );

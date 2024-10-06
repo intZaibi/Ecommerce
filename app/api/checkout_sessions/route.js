@@ -1,3 +1,5 @@
+import { metadata } from '@/app/layout';
+import { auth } from '@/app/utils/firebase';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
@@ -5,10 +7,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req, res) {
     try {
-      const data = await req.json();
-      console.log(data);
-
-      // Create customer object
+      const { cartItems } = await req.json();
+      
       const customer = await stripe.customers.create({
         name: 'Jenny Rosen',
         address: {
@@ -22,19 +22,26 @@ export async function POST(req, res) {
       });
 
       const session = await stripe.checkout.sessions.create({
-          line_items: [
-            {
+          line_items: cartItems.map((item, index) => {
+            return {
               price_data: {
                 product_data: {
-                  name: data.name,
+                  name: item.ProductName,
+                  images: [item.ImageURLs[0]],
+                  metadata : {
+                    productId : item.ProductID
+                  }
                 },
                 currency: 'PKR',
-                unit_amount: data.price * 100,
+                unit_amount: item.Price * 100,
               },
-              quantity: 1,
-            },
-          ],
+              quantity: item.quantity || 1,
+            }
+          }),
           mode: 'payment',
+          submit_type: 'pay',
+          billing_address_collection: 'auto',
+          // customer_email: user.email,
           success_url: `http://localhost:3000/success?token=customer.id`,
           cancel_url: `http://localhost:3000/cancel?token=customer.id`,
         });

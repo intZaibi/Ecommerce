@@ -7,13 +7,26 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useContext } from 'react';
 import { CartContext } from '@/app/context/Cartcontext';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/utils/firebase";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export default function ProductDetail({params}) {
 
-  const { addToCart, isItemExistInCart } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
   
   const [currentProductID] = useState(params.productDetail)
   const [product, setProduct] = useState({});
+  const [selectedStorage, setSelectedStorage] = useState(null);
+  const [selectedRAM, setSelectedRAM] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
+
+  const [user] = useAuthState(auth)
+
+  const token = Cookies.get('token');
+  
+  const router = useRouter()
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -29,11 +42,20 @@ export default function ProductDetail({params}) {
     fetchProducts();
   
   }, [])
-
-  const handleAddToCart = (product) => {
-      addToCart(product);
-  };
   
+  const handleAddToCart = (product) => {
+
+    if (!user && !token) {
+      router.push("../../userAccount/auth/signIn")
+    } else if (!selectedStorage || !selectedRAM || !selectedColor) {
+      alert("Please select all options (Storage, RAM, and Color).");
+    } else {
+      const updatedProduct = { ...product, Storage: selectedStorage, RAM: selectedRAM, Color: selectedColor };
+      addToCart(updatedProduct);
+    }
+
+  };
+
   
 
   return (
@@ -70,7 +92,7 @@ export default function ProductDetail({params}) {
               <fieldset className="my-4">
                 {product?.Storage?.map((item, i)=>(
                   <label htmlFor={`memoryVariantBtn${i}`} key={i}>
-                    <input type="radio" name="memoryVariant" id={`memoryVariantBtn${i}`} className="w-9 peer sr-only"/>
+                    <input type="radio" name="memoryVariant" id={`memoryVariantBtn${i}`} className="w-9 peer sr-only" onChange={() => setSelectedStorage(item)}/>
                       <div className="inline peer-checked:bg-black peer-checked:text-white py-4 rounded-full px-7 mr-4 shadow-lg shadow-[#080f343a]">
                       {item}GB
                       </div>
@@ -81,7 +103,7 @@ export default function ProductDetail({params}) {
               <fieldset className="mt-7 mb-4">
                 {product?.RAM?.map((item, i)=>(
                   <label htmlFor={`RAMBtn${i}`} key={i}>
-                    <input type="radio" name='RAMBtn' id={`RAMBtn${i}`} className="w-9 peer sr-only"/>
+                    <input type="radio" name='RAMBtn' id={`RAMBtn${i}`} className="w-9 peer sr-only" onChange={() => setSelectedRAM(item)}/>
                       <div className="inline peer-checked:bg-black peer-checked:text-white py-4 rounded-full px-7 mr-4 shadow-lg shadow-[#080f343a]">
                       {item}GB
                       </div>
@@ -92,7 +114,7 @@ export default function ProductDetail({params}) {
               <fieldset className="mt-7 mb-14">
                 {product?.Color?.map((item, i)=>(
                   <label htmlFor={`colorBtn${i}`} key={i}>
-                    <input type="radio" name='colorBtn' id={`colorBtn${i}`} className="w-9 peer sr-only"/>
+                    <input type="radio" name='colorBtn' id={`colorBtn${i}`} className="w-9 peer sr-only" onChange={() => setSelectedColor(item)}/>
                       <div className="inline peer-checked:bg-black peer-checked:text-white py-4 rounded-full px-7 mr-4 shadow-lg shadow-[#080f343a]">
                       {item}
                       </div>
@@ -104,7 +126,6 @@ export default function ProductDetail({params}) {
               <button onClick={() => { handleAddToCart(product) }} className="inline bg-[#00cc88] shadow-[#00cc894f] shadow-lg hover:shadow-xl hover:shadow-[#00cc895d] px-2 py-5 rounded-full w-full lg:w-44 text-lg text-white hover:-translate-y-1 duration-300 ease-out">
                 Add to cart
               </button>
-                <p className={`text-red-400 text-lg ${isItemExistInCart(product.ProductID)? "inline-block": "hidden"}`} >Item already exist in your cart.</p>
               <button className="inline text-[#00cc88] shadow-[#080f340f] shadow-lg hover:shadow-xl hover:shadow-[#080f341f] px-2 py-5 rounded-full w-full lg:w-44 text-lg bg-white hover:-translate-y-1 duration-300 ease-out">
                 Buy it now
               </button>

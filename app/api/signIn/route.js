@@ -14,7 +14,7 @@ export async function POST(req) {
     name: 'token',
     value: token,
     httpOnly: false,
-    maxAge: 60*10,
+    maxAge: 60*60*24,
     sameSite: 'strict',
     path: '/'
   });

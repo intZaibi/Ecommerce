@@ -5,24 +5,39 @@ import { useContext } from 'react';
 import { CartContext } from '../app/context/Cartcontext';
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/utils/firebase";
+import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
+
 
 export default function Cart({ IsCartOpen, closeCart }) {
   const { cartItems, removeProduct, incrementQuantity, decrementQuantity } = useContext(CartContext);
   const [loading, setLoading] = useState(false);
 
-  const checkoutBtn = async (e) => {
-    e.preventDefault()
-    setLoading(true);
-    try {
-      const response = await axios.post("http://localhost:3000/api/checkout_sessions", {cartItems})
-      const resData = await response.data
-      
-      window.location.href = resData.url
+  const [user] = useAuthState(auth)
+  const router = useRouter()
 
-    }
-    catch (err){
-      toast.error("Something went wrong!...")
-      setLoading(false);
+  const checkoutBtn = async (e) => {
+      e.preventDefault()
+      setLoading(true);
+      const token = Cookies.get('token');
+      if (!user && !token) {
+        toast.error("You are not logged in.")
+        router.push("../userAccount/auth/signIn")
+      } else {
+
+      try {
+        const response = await axios.post("http://localhost:3000/api/checkout_sessions", {cartItems, user})
+        const resData = await response.data
+        
+        window.location.href = resData.url
+
+      }
+      catch (err){
+        toast.error("Something went wrong!...")
+        setLoading(false);
+      }
     }
   }
 

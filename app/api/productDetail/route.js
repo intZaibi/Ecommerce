@@ -5,7 +5,7 @@ export async function GET(req) {
   const url = new URL(req.url);
   const currentProductID = url.searchParams.get('productid');
   
-  console.log('Current ProductID:', currentProductID);
+  // console.log('Current ProductID:', currentProductID);
   
   // const data = await req.json()
   try {
@@ -20,7 +20,7 @@ export async function GET(req) {
 
     const data = await db.query(query);
 
-    console.log(data[0][0]);
+    // console.log(data[0][0]);
 
     return NextResponse.json({result: data}, { status: 200 });
   } catch (error) {

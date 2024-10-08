@@ -15,6 +15,7 @@ import axios from 'axios';
 export default function Profile() {
 
   const [user] = useAuthState(auth)
+  const router = useRouter()
 
     const token = Cookies.get('token');
     if (!user && !token) {
@@ -22,7 +23,6 @@ export default function Profile() {
       router.push("./auth/signIn")
     }
   
-  const router = useRouter()
 
   const openDropdown = () => {
     const dropdown = document.querySelector("#dropdown");
@@ -61,13 +61,12 @@ export default function Profile() {
     <nav className="flex w-full justify-between items-center bg-white shadow-[0_0_10px_#080f340f] mx-auto lg:py-8 lg:px-52">
       <div id="logo" className="px-4 flex">
         <Link href="/home" className="-m-1.5 p-1.5">
-          <span id="arrow" className="sr-only">Your Company</span>
           <img alt="" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" className="w-auto h-10" />
         </Link>
 
         <div className="text-lg text-gray-700 flex items-center ml-20">
           <Link href="/userAccount/orders">
-          Orders
+          See Orders
           </Link>
         </div>
       </div>

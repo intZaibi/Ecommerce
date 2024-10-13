@@ -28,7 +28,7 @@ export default function OrderPage() {
   const getfunc = async () => {
     if (user && user.email) {
       try {
-        const res = await axios.post("http://localhost:3000/api/orders", { email: user.email });
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/orders`, { email: user.email });
         setOrders(res.data.data.map((item) => [item.amount_total, item.product_data, item.Status] ))
       } catch (error) {
         console.error("Error fetching orders:", error);
@@ -50,7 +50,7 @@ export default function OrderPage() {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      await axios.get("http://localhost:3000/api/signIn");
+      await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/signIn`);
       toast.success('You have successfully signed out');
       router.push('./auth/signIn');
     } catch (error) {

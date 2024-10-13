@@ -38,7 +38,7 @@ export default function Products(props) {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/api/Allproducts/client"
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/client`
         );
         setAllProducts(res.data.result);
       } catch (err) {

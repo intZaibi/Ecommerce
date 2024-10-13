@@ -37,7 +37,7 @@ export default function ProductTable() {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/api/Allproducts/admin"
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`
         );
         setProducts(res.data.result);
         console.log(res.data.result);
@@ -75,14 +75,14 @@ export default function ProductTable() {
   const handleDeleteProduct = async (productId) => {
     console.log("delete func triggered");
     try {
-      await axios.delete(`http://localhost:3000/api/Allproducts/admin`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`, {
         data: productId,
       });
 
       const fetchProducts = async () => {
         try {
           const res = await axios.get(
-            "http://localhost:3000/api/Allproducts/admin"
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`
           );
           setProducts(res.data.result);
         } catch (err) {
@@ -156,14 +156,14 @@ export default function ProductTable() {
       };
 
       const res = await axios.post(
-        "http://localhost:3000/api/Allproducts/admin",
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`,
         formData
       );
       if (updating) {
         const fetchProducts = async () => {
           try {
             const res = await axios.get(
-              "http://localhost:3000/api/Allproducts/admin"
+              `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`
             );
             setProducts(res.data.result);
           } catch (err) {

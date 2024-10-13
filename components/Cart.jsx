@@ -28,7 +28,7 @@ export default function Cart({ IsCartOpen, closeCart }) {
       } else {
 
       try {
-        const response = await axios.post("http://localhost:3000/api/checkout_sessions", {cartItems, user})
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/checkout_sessions`, {cartItems, user})
         const resData = await response.data
         
         window.location.href = resData.url

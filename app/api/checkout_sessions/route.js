@@ -33,8 +33,8 @@ export async function POST(req, res) {
           metadata: {
             userID: user.uid
           },
-          success_url: `http://localhost:3000/products`,
-          cancel_url: `http://localhost:3000/products`,
+          success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/products`,
+          cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/products`,
         });
         
       return NextResponse.json({ url: session.url }, { status: 200 });

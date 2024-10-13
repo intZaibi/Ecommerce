@@ -23,7 +23,7 @@ export default function SignIn() {
       await signInWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
 
-      await axios.post("http://localhost:3000/api/signIn", user)
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/signIn`, user)
       toast.success('Sign in successful!');
       setLoading(false);
       router.push('../profile');

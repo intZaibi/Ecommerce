@@ -39,7 +39,7 @@ export default function ProductDetail({params}) {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/productDetail?productid=${currentProductID}`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/productDetail?productid=${currentProductID}`
         );
         setProduct(res.data.result[0][0]);
       } catch (err) {

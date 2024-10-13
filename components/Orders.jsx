@@ -6,7 +6,7 @@ export default function Orders({ data }) {
 
   const getProductDetails = async (descriptions) => {
     try {
-      const response = await axios.post("http://localhost:3000/api/Allproducts/client", {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/client`, {
         descriptions
       });
       setProductDetails((prevDetails) => [...prevDetails, response.data.rows]);

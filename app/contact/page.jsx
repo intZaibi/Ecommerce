@@ -17,7 +17,7 @@ export default function page() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/api/contactForm", formData);
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/contactForm`, formData);
       if (res.status === 200) {
         alert("We Have received your message. \nThank you for contacting us. We'll get back to you soon! ")
         document.querySelectorAll("#input").forEach(input => input.value = "");

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
@@ -8,10 +8,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import Cart from "./Cart";
+import { useContext } from 'react';
+import { CartContext } from '../app/context/Cartcontext';
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [itemsInCart, setItemsInCart] = useState(0);
+  const { cartItems } = useContext(CartContext);
+
+  useEffect(() => {
+    if (cartItems) {
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      setItemsInCart(cartItems.length);
+    }
+  }, [cartItems]);
+  
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [IsCartOpen, setIsCartOpen] = useState(false)
@@ -19,7 +30,6 @@ export default function Example() {
   const openDropdown = () => setDropdownOpen(true);
   const closeDropdown = () => setDropdownOpen(false);
   
-  // const [cartOpen, setCartOpen] = useState(props.IsCartOpen);  // Initially open
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
@@ -30,7 +40,7 @@ export default function Example() {
         <div id="logo" className="px-4 flex">
           <Link href="/" className="-m-1.5 p-1.5">
             <span id="arrow" className="sr-only">Your Company</span>
-            <img alt="" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" className="w-auto h-10" />
+            <img alt="" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" className="w-auto h-10" />
           </Link>
         </div>
 

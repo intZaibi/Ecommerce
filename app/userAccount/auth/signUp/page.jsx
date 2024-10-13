@@ -4,6 +4,7 @@ import { auth } from '../../../utils/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 export default function SignUp() {
   const [fullName, setFullName] = useState('');
@@ -28,6 +29,7 @@ export default function SignUp() {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      await axios.post("http://localhost:3000/api/signUp", {email})
       toast.success('Sign up successful!');
       setLoading(false);
       router.push('./signIn');

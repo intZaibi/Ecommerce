@@ -12,7 +12,7 @@ import Cookies from 'js-cookie';
 
 
 export default function Cart({ IsCartOpen, closeCart }) {
-  const { cartItems, removeProduct, incrementQuantity, decrementQuantity } = useContext(CartContext);
+  const { cartItems, removeProduct, incrementQuantity, decrementQuantity, updateQuantity } = useContext(CartContext);
   const [loading, setLoading] = useState(false);
 
   const [user] = useAuthState(auth)
@@ -43,7 +43,7 @@ export default function Cart({ IsCartOpen, closeCart }) {
 
   return (
     <div
-      className={`fixed h-[100vh] ${IsCartOpen ? "block" : "hidden"} overflow-hidden scrollbar overflow-y-scroll z-10 min-w-[35vw] py-14 px-2 shadow-[0_8px_20px_#080f342f] bg-[#fcfcfc] top-0 right-0 min-h-screen`}
+      className={`fixed h-[100vh] ${IsCartOpen ? "translate-x-[0]" : "translate-x-[550px]"} overflow-hidden duration-500 ease-out scrollbar overflow-y-scroll z-10 min-w-[30vw] py-14 px-2 shadow-[0_8px_20px_#080f342f] bg-[#fcfcfc] top-0 right-0 min-h-screen`}
     >
       <div className="flex justify-between px-5 items-center">
         <h1 className="text-2xl font-bold">Your Cart</h1>
@@ -70,7 +70,7 @@ export default function Cart({ IsCartOpen, closeCart }) {
               />
             </div>
             <div className="right">
-              <h2 className="mb-[10px] font-bold text-xl sm:leading-none md:leading-none lg:leading-[1.10]">
+              <h2 className="mb-[10px] max-w-72 text-wrap font-bold text-xl sm:leading-none md:leading-none lg:leading-[1.10]">
                 {item.ProductName}
               </h2>
               <div className="flex flex-col gap-1.5">
@@ -95,6 +95,7 @@ export default function Cart({ IsCartOpen, closeCart }) {
                 type="text"
                 className="py-2 w-10 text-center"
                 value={item.quantity}
+                onChange={(e) => updateQuantity(item.ProductID, e.target.value)}
               />
               <button
                 onClick={() => incrementQuantity(item.ProductID)}

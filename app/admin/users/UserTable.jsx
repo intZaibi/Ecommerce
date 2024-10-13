@@ -1,101 +1,26 @@
 "use client"
 import { Card, Typography } from '@material-tailwind/react';
+import axios from 'axios';
 import { useRef, useEffect, useState } from 'react';
  
-const TABLE_HEAD = ["Name", "Email", "Image", "Role"];
+const TABLE_HEAD = ["Name", "Email", "Address", "Postal Code", "Mobile No"];
  
-const TABLE_ROWS = [
-  {
-    name: "John Michael",
-    email: "xyz@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Alexa Liras",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Laurent Perrier",
-    email: "xyz@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Michael Levi",
-    email: "xyz@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-    img: "/person-1.jpg",
-  },
-];
-
-
-
 export default function DefaultTable() {
-  const [filtervalue, setFiltervalue] = useState("")
+  const [filtervalue, setFiltervalue] = useState("");
+  const [users, setUsers] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/allUsers`, {cache: 'no-store'});
+      setUsers(res.data.users);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  useEffect(() => {
+      fetchData();
+  }, []);
   
   return (
     <div className="mt-12 bg-white  h-4/5 p-4 pb-20 rounded-3xl shadow-[0_8px_20px_#080f342f]">
@@ -113,7 +38,7 @@ export default function DefaultTable() {
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-b border-blue-gray-100 bg-blue-gray-50 px-8 py-4"
+                  className="border-b border-blue-gray-100 bg-blue-gray-50 px-4 py-4"
                 >
                   <Typography
                     variant="small"
@@ -127,12 +52,12 @@ export default function DefaultTable() {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.filter((item) => {
+            {users?.filter((item) => {
                 return filtervalue.toLowerCase() === ""
                   ? true
                   : Object.values(item).toString().toLowerCase().includes(filtervalue.toLowerCase());
-              }).map(({ name, email, img }, index) => {
-              const isLast = index === TABLE_ROWS.length - 1;
+              }).map(({ name, email, address }, index) => {
+              const isLast = index === users.length - 1;
               const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
   
               return (
@@ -156,16 +81,31 @@ export default function DefaultTable() {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <img src={img} alt="" width={100} height={100} className='w-12 h-12 ml-4' />
+                    {address?.map((item, i) => {
+                      if( i !== 0 && i !== address.length -1 && i !== address.length -2 ) {
+                        return (
+                          <> {item + ", "} </>
+                    )} else if(i === address.length -2){
+                      return (
+                        <> {item} </>
+                    )}
+                    })}
                   </td>
                   <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-medium pl-4"
-                    >
-                      User
-                    </Typography>
+                    {address?.map((item, i) => {
+                      if( i === address.length -2 ) 
+                        return (
+                          <> {item} </>
+                    )
+                    })}
+                  </td>
+                  <td className={classes}>
+                    {address?.map((item, i) => {
+                      if( i === address.length -1 ) 
+                        return (
+                          <> {item} </>
+                    )
+                    })}
                   </td>
                 </tr>
               );

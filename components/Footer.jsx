@@ -5,7 +5,7 @@ import React from "react";
 export default function Footer() {
   return (
     <>
-      <div className="pt-10 pb-5 w-full ">
+      <div className="pt-10 pb-5 w-full">
         <hr className="mt-16 mb-10" />
         <div className="mx-auto px-8 md:px-24 lg:px-[70px] lg:py-0 sm:max-w-xl md:max-w-full lg:max-w-7xl">
           <div className="flex flex-col lg:flex-row gap-10 lg:gap-0 lg:justify-between items-center lg:items-start">
@@ -14,7 +14,7 @@ export default function Footer() {
                 <span className="sr-only">Your Company</span>
                 <img
                   alt=""
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                  src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
                   className="w-16 h-16"
                 />
               </Link>

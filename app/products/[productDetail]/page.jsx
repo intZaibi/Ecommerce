@@ -11,6 +11,13 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/utils/firebase";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import 'lightgallery/css/lightgallery.css';
+import 'lightgallery/css/lg-thumbnail.css';
+import 'lightgallery/css/lg-zoom.css';
+import LightGallery from 'lightgallery/react';
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
+import lgZoom from 'lightgallery/plugins/zoom';
+
 
 export default function ProductDetail({params}) {
 
@@ -64,22 +71,31 @@ export default function ProductDetail({params}) {
       <div className="md:px-10 mt-40 lg:px-10 max-w-full">
         <div className="mx-auto px-8 md:px-0 lg:py-0 sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
           <div id="container" className="gap-5 row-gap-8 grid lg:grid-cols-2">
-          <div id="right" className="relative flex flex-col justify-end">
-            {product?.ImageURLs
-            ?.filter((url)=>{
-              return url.includes("_1.");
-            })
-            .map((item, i)=>{
-              return (
-              <Image src={`${item}`} key={i} width={1000} height={1000} alt="product main image" priority={true}/>
-              )})}
-              <div className="flex gap-4 flex-wrap">
-                {product?.ImageURLs?.filter((url)=>{
-                  return !url.includes("_1.");
-                  })
-                  .map((item, i)=>{
-                  return (<Image src={`${item}`} key={i} width={100} height={100} className="min-w-32 min-h-24 rounded-[30px] " alt="product image"/>)})}
-              </div>
+            <div id="right" className="relative flex flex-col justify-end">
+              <LightGallery speed={500} plugins={[lgThumbnail, lgZoom]}>
+                {product?.ImageURLs?.map((item, i) => (
+                  <a href={item} data-src={item} key={i}>
+                    {item.includes("_1.") ? (
+                      <Image
+                        src={item}
+                        width={1000}
+                        height={1000}
+                        alt={`Image ${i+1}`}
+                        priority={true}
+                        className="rounded-lg"
+                      />
+                    ) : (
+                      <Image
+                        src={item}
+                        width={100}
+                        height={100}
+                        className="min-w-32 min-h-24 inline rounded-[30px]"
+                        alt={`thumbnail image ${i}`}
+                      />
+                    )}
+                  </a>
+                ))}
+              </LightGallery>
             </div>
             
             <div id="left" className="flex flex-col justify-center lg:justify-start lg:pt-20 lg:px-5">

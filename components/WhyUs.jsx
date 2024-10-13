@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export default function Hero() {
@@ -43,9 +44,9 @@ export default function Hero() {
             <p className="ml-3 font-semibold">Because we are nice and our teams are great!</p>
             </div>
             </div>
-            <button className="inline bg-[#00cc88] shadow-[#00cc894f] shadow-lg hover:shadow-xl hover:shadow-[#00cc895d] px-2 py-4 lg:py-6 rounded-full w-full lg:w-64 text-lg text-white hover:-translate-y-1 duration-300 ease-out font-semibold">
-              Contact us <span></span>
-            </button>
+            <Link href="/contact" className="text-center bg-[#00cc88] shadow-[#00cc894f] shadow-lg hover:shadow-xl hover:shadow-[#00cc895d] px-2 py-4 lg:py-6 rounded-full w-full lg:w-64 text-lg text-white hover:-translate-y-1 duration-300 ease-out font-semibold">
+              Contact us
+            </Link>
           </div>
           <div id="right" className="hidden relative lg:flex md:flex justify-end rounded-[2.5rem] bg-[#00cc88]">
             <Image

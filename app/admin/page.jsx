@@ -1,184 +1,101 @@
 "use client"
 import { Card, Typography } from "@material-tailwind/react";
 import Sidebar from '@/components/Sidebar'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import axios from "axios";
+import Link from "next/link";
 
 const TABLE_HEAD = ["OrderID", "CustomerID", "Date & Time", "Product(s)ID", "TotalCost", "Status"];
 
-const TABLE_ROWS = [
-  {
-    OrderID: "001",
-    CustomerID: "John Michael",
-    "Date & Time": "2023-09-15 14:30",
-    "Product(s)ID": "P001, P002",
-    TotalCost: "$120",
-    Status: "Completed"
-  },
-  {
-    OrderID: "002",
-    CustomerID: "Alexa Liras",
-    "Date & Time": "2023-09-15 15:00",
-    "Product(s)ID": "P003",
-    TotalCost: "$50",
-    Status: "Pending"
-  },
-  {
-    OrderID: "003",
-    CustomerID: "Laurent Perrier",
-    "Date & Time": "2023-09-15 15:15",
-    "Product(s)ID": "P004, P005",
-    TotalCost: "$200",
-    Status: "Shipped"
-  },
-  {
-    OrderID: "004",
-    CustomerID: "Michael Levi",
-    "Date & Time": "2023-09-15 15:30",
-    "Product(s)ID": "P006",
-    TotalCost: "$80",
-    Status: "Processing"
-  },
-  {
-    OrderID: "005",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 16:00",
-    "Product(s)ID": "P007",
-    TotalCost: "$30",
-    Status: "Cancelled"
-  },
-  {
-    OrderID: "006",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 16:30",
-    "Product(s)ID": "P008",
-    TotalCost: "$25",
-    Status: "Completed"
-  },
-  {
-    OrderID: "007",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 17:00",
-    "Product(s)ID": "P009",
-    TotalCost: "$75",
-    Status: "Pending"
-  },
-  {
-    OrderID: "008",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 17:30",
-    "Product(s)ID": "P010",
-    TotalCost: "$110",
-    Status: "Shipped"
-  },
-  {
-    OrderID: "009",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 18:00",
-    "Product(s)ID": "P011",
-    TotalCost: "$55",
-    Status: "Processing"
-  },
-  {
-    OrderID: "010",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 18:30",
-    "Product(s)ID": "P012",
-    TotalCost: "$90",
-    Status: "Completed"
-  },
-  {
-    OrderID: "011",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 19:00",
-    "Product(s)ID": "P013",
-    TotalCost: "$40",
-    Status: "Cancelled"
-  },
-  {
-    OrderID: "012",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 19:30",
-    "Product(s)ID": "P014",
-    TotalCost: "$60",
-    Status: "Shipped"
-  },
-  {
-    OrderID: "013",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 20:00",
-    "Product(s)ID": "P015",
-    TotalCost: "$85",
-    Status: "Pending"
-  },
-  {
-    OrderID: "014",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 20:30",
-    "Product(s)ID": "P016",
-    TotalCost: "$100",
-    Status: "Completed"
-  },
-  {
-    OrderID: "015",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 21:00",
-    "Product(s)ID": "P017",
-    TotalCost: "$120",
-    Status: "Processing"
-  },
-  {
-    OrderID: "016",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 21:30",
-    "Product(s)ID": "P018",
-    TotalCost: "$65",
-    Status: "Shipped"
-  },
-  {
-    OrderID: "017",
-    CustomerID: "Richard Gran",
-    "Date & Time": "2023-09-15 22:00",
-    "Product(s)ID": "P019",
-    TotalCost: "$150",
-    Status: "Completed"
-  }
-];
+export default function Dashboard() {
 
-export default function Admin() {
+  const router = useRouter();
+  const token = Cookies.get('admin');
+  const authenticate = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/adminLogin`, {
+      method: 'GET',
+      cache: 'no-store',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}` // Send token in Authorization header
+      }
+    });
+    if (!res.ok) router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/admin/auth/signIn`);
+  };
+  
+  useEffect(() => {
+    authenticate();
+  }, []);
+
+
+
+  const [loading, setLoading] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [users, setUsers] = useState(0);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/adminOrders`, { cache: 'no-store' });
+      setOrders(res.data.orders);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/client`, { cache: 'no-store' });
+      setProducts(response.data.result);
+      const resp = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/allUsers`, {cache: 'no-store'});
+      setUsers(resp.data.users.length);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false); 
+    }
+  };
+
+  useEffect(() => {
+      fetchData();
+  }, []);
+
   return (
     <div className=''>
       <Sidebar />
       <div className='pl-[22vw] pr-8 pt-28 pb-8 grid grid-cols-3 grid-rows-3 gap-7 h-screen'>
+      {loading ? (
+        <div className="col-span-3 flex justify-center items-center h-full">
+          <div className="animate-spin h-10 w-10 border-4 border-t-4 border-blue-500 border-t-transparent rounded-full"></div>
+        </div>
+      ) : (
+        <>
         <div id="totalCustomers" className="flex flex-col bg-white shadow-[0_8px_20px_#080f342f] p-4 rounded-2xl min-h-10 min-w-10 col-span-1 row-span-1">
           <h1 className="text-xl font-bold">
             Total Customers
           </h1>
           <p className='mt-3 text-gray-600'>
-            1 | registered users
+            {users} | registered users
           </p>
           
-          <button className='py-2 px-4 self-start mt-4 bg-blue-300 shadow-[0_8px_20px_#080f342a] hover:bg-blue-400 duration-200 rounded-xl text-white'>
+          <Link href="/admin/users" className='py-2 px-4 self-start mt-4 bg-blue-300 shadow-[0_8px_20px_#080f342a] hover:bg-blue-400 duration-200 rounded-xl text-white'>
             view detail
-          </button>
+          </Link>
         </div>
         <div id="totalOrders" className="flex flex-col bg-white shadow-[0_8px_20px_#080f342f] p-4 rounded-2xl min-h-10 min-w-10 col-span-1 row-span-1">
           <h1 className="text-xl font-bold">
             Total Orders
           </h1>
           <p className='mt-3 text-gray-600'>
-            1 | placed orders
+            {orders.length} | placed orders
           </p>
           
-          <button className='py-2 px-4 self-start mt-4 bg-blue-300 shadow-[0_8px_20px_#080f342a] hover:bg-blue-400 duration-200 rounded-xl text-white'>
+          <Link href="/admin/orders" className='py-2 px-4 self-start mt-4 bg-blue-300 shadow-[0_8px_20px_#080f342a] hover:bg-blue-400 duration-200 rounded-xl text-white'>
             view detail
-          </button>
+          </Link>
         </div>
         <div id="totalSales" className="flex flex-col bg-white shadow-[0_8px_20px_#080f342f] p-4 rounded-2xl min-h-10 min-w-10 col-span-1 row-span-3">
           <h1 className="text-xl font-bold">
             Total Sales
           </h1>
           <p className='mt-3 text-gray-600'>
-            RS: 12000 | total revenue
+            {((orders.reduce((acc, order) => acc + parseFloat(order.amount_total), 0))/100).toFixed(2)} | total revenue
           </p>
           
         </div>
@@ -207,9 +124,16 @@ export default function Admin() {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(({ OrderID, CustomerID, "Date & Time": DateTime, "Product(s)ID": ProductIDs, TotalCost, Status }, index) => {
-                const isLast = index === TABLE_ROWS.length - 1;
+            {orders.map(({ id, customer_email, created_at, product_data, amount_total, Status }, index) => {
+                const isLast = index === orders.length - 1;
                 const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+                const productsNames = product_data?.map((item) => {
+                  return item.description
+                });
+                const dateTime = created_at.toString().split("T")[1].split(".")[0].substr(0, created_at.toString().split("T")[1].split(".")[0].length-3) + ", " + created_at.toString().split("T")[0]
+                const productQuantity = product_data?.map((item) => {
+                  return item.quantity
+                });
 
                 let statusColor = "";
                 switch (Status) {
@@ -233,14 +157,14 @@ export default function Admin() {
                 }
 
                 return (
-                  <tr key={OrderID}>
+                  <tr key={id}>
                     <td className={classes}>
                       <Typography
                         variant="small"
                         color="blue-gray"
                         className="font-normal text-center"
                       >
-                        {OrderID}
+                        {id}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -249,7 +173,7 @@ export default function Admin() {
                         color="blue-gray"
                         className="font-normal text-center"
                       >
-                        {CustomerID}
+                        {customer_email}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -258,7 +182,7 @@ export default function Admin() {
                         color="blue-gray"
                         className="font-normal text-center"
                       >
-                        {DateTime}
+                        {dateTime}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -267,7 +191,13 @@ export default function Admin() {
                         color="blue-gray"
                         className="font-normal text-center"
                       >
-                        {ProductIDs}
+                        {productsNames.map((element) => {
+                          const id = products.find((item) => item.ProductName === element)?.ProductID;
+                          return id;
+                        })
+                        .filter(id => id !== undefined)
+                        .join(", ")
+                        }
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -276,7 +206,7 @@ export default function Admin() {
                         color="blue-gray"
                         className="font-normal text-center"
                       >
-                        {TotalCost}
+                        {amount_total/100}
                       </Typography>
                     </td>
                     <td className={`${classes} ${statusColor}`}>
@@ -296,7 +226,8 @@ export default function Admin() {
         </Card>
           
         </div>
-
+        </>
+      )}
       </div>
     </div>
   )

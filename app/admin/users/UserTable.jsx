@@ -1,7 +1,7 @@
 "use client"
 import { Card, Typography } from '@material-tailwind/react';
 import axios from 'axios';
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
  
 const TABLE_HEAD = ["Name", "Email", "Address", "Postal Code", "Mobile No"];
  

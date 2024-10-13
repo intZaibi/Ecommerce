@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import mainImage from '../public/main.webp';
+import Link from "next/link";
 
 
 export default function Hero() {
@@ -16,9 +17,9 @@ export default function Hero() {
               Buy these models that were "revolutionary" only 4 years ago... but
               much, much cheaper 😉
             </p>
-            <button className="inline bg-[#00cc88] shadow-[#00cc894f] shadow-lg hover:shadow-xl hover:shadow-[#00cc895d] px-2 py-6 rounded-full w-full lg:w-64 text-lg text-white hover:-translate-y-1 duration-300 ease-out">
+            <Link href="/about" className="text-center bg-[#00cc88] shadow-[#00cc894f] shadow-lg hover:shadow-xl hover:shadow-[#00cc895d] px-2 py-6 rounded-full w-full lg:w-64 text-lg text-white hover:-translate-y-1 duration-300 ease-out">
               Discover our catalog
-            </button>
+            </Link>
           </div>
           <div id="right" className="relative flex justify-end">
             <Image

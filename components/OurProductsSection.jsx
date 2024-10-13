@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-export default function Commitments() {
+export default function OurProductsSection() {
   return (
     <div className="md:px-10 lg:px-10 py-10 max-w-full">
       <div className="mx-auto px-8 md:px-24 lg:px-[70px] lg:py-0 sm:max-w-xl md:max-w-full lg:max-w-7xl">

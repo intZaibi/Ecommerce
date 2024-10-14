@@ -9,7 +9,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import Cart from "./Cart";
 import { useContext } from 'react';
-import { CartContext } from '@/app/context/Cartcontext';
+import { CartContext } from '@/app/context/CartContext';
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

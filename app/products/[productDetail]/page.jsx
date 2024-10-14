@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useContext } from 'react';
-import { CartContext } from '@/app/context/Cartcontext';
+import { CartContext } from '@/app/context/CartContext';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/utils/firebase";
 import { useRouter } from "next/navigation";

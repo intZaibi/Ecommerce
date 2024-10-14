@@ -2,6 +2,7 @@
 import { Card } from "@material-tailwind/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const TABLE_HEAD = [
   "ProductName",
@@ -36,9 +37,9 @@ export default function ProductTable() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(
+        const res = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`,
-          { method: 'GET', cache: 'no-store'}
+          { cache: 'no-store' }
         );
         setProducts(res.data.result);
         console.log(res.data.result);
@@ -78,15 +79,12 @@ export default function ProductTable() {
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`, {
         data: productId,
-        headers: {
-          'Cache-Control': 'no-store'
-        }
       });
 
       const fetchProducts = async () => {
         try {
           const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`, {cache: 'no-store'}
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`, { cache: 'no-store' }
           );
           setProducts(res.data.result);
         } catch (err) {
@@ -167,9 +165,8 @@ export default function ProductTable() {
         const fetchProducts = async () => {
           try {
             const res = await axios.get(
-              `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`, {cache: 'no-store'}
+              `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`, { cache: 'no-store' }
             );
-            console.log("res.data.result: ", res.data.result)
             setProducts(res.data.result);
           } catch (err) {
             console.log("Error:", err.response);

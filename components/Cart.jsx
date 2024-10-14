@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { useContext } from 'react';
-import { CartContext } from '../app/context/Cartcontext';
+import { CartContext } from '@/app/context/Cartcontext';
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useAuthState } from "react-firebase-hooks/auth";

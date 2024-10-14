@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useContext } from 'react';
-import { CartContext } from '../context/Cartcontext';
+import { CartContext } from '@/app/context/CartContext';
 import axios from "axios";
 
 

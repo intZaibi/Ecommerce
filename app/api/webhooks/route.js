@@ -5,11 +5,7 @@ import db from '@/app/utils/db'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-export const config = {
-  api: {
-    bodyParser: false,  // Stripe requires raw body for signature verification
-  },
-};
+export const dynamic = 'force-dynamic'; // or any appropriate configuration
 
 export async function POST(req, res) {
 

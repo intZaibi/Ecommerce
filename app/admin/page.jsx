@@ -39,11 +39,11 @@ export default function Dashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/adminOrders`, { cache: 'no-store' });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/adminOrders`, { method: 'GET', cache: 'no-store' });
       setOrders(res.data.orders);
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/client`, { cache: 'no-store' });
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/client`, { method: 'GET', cache: 'no-store' });
       setProducts(response.data.result);
-      const resp = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/allUsers`, {cache: 'no-store'});
+      const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/allUsers`, {method: 'GET', cache: 'no-store'});
       setUsers(resp.data.users.length);
     } catch (error) {
       console.log(error);

@@ -78,12 +78,15 @@ export default function ProductTable() {
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`, {
         data: productId,
+        headers: {
+          'Cache-Control': 'no-store'
+        }
       });
 
       const fetchProducts = async () => {
         try {
           const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`, {cache: 'no-store'}
           );
           setProducts(res.data.result);
         } catch (err) {
@@ -164,7 +167,7 @@ export default function ProductTable() {
         const fetchProducts = async () => {
           try {
             const res = await axios.get(
-              `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`
+              `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`, {cache: 'no-store'}
             );
             setProducts(res.data.result);
           } catch (err) {

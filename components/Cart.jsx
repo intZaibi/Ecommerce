@@ -28,6 +28,7 @@ export default function Cart({ IsCartOpen, closeCart }) {
       } else {
 
       try {
+        console.log("going to checkout api...")
         const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/checkout_sessions`, {cartItems, user})
         const resData = await response.data
         

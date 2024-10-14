@@ -5,6 +5,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req, res) {
 
+  console.log("reached to checkout api...")
+
     const { cartItems, user } = await req.json();
     try {
       

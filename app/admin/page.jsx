@@ -4,7 +4,6 @@ import Sidebar from '@/components/Sidebar'
 import React, { useState, useEffect } from 'react'
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import axios from "axios";
 import Link from "next/link";
 
 const TABLE_HEAD = ["OrderID", "CustomerID", "Date & Time", "Product(s)ID", "TotalCost", "Status"];

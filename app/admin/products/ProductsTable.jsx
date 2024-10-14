@@ -36,12 +36,13 @@ export default function ProductTable() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`,
+          { method: 'GET', cache: 'no-store'}
         );
         setProducts(res.data.result);
         console.log(res.data.result);
-        // toast("Please zoom-out for better table view")
+        toast("Please zoom-out for better table view")
       } catch (err) {
         console.log("Error:", err.response);
       }

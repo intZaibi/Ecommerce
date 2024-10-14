@@ -169,6 +169,7 @@ export default function ProductTable() {
             const res = await axios.get(
               `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`, {cache: 'no-store'}
             );
+            console.log("res.data.result: ", res.data.result)
             setProducts(res.data.result);
           } catch (err) {
             console.log("Error:", err.response);

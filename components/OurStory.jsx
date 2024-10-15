@@ -4,8 +4,8 @@ export default function OurStory() {
   return (
     <div id="container" className="gap-5 grid lg:grid-cols-2">
           <div id="right" className="relative flex justify-end gap-7">
-            <img src="/aboutpic4.jpeg" alt="main img" className=' shadow-[0_14px_44px_#3f80fd14,0_18px_84px_#14142b2b] lg:rounded-[50px] rounded-[40px] lg:w-3/4 w-9/12 h-[50vw] lg:h-4/6 ml-0 mr-auto' />
-            <img src="/aboutpic7.webp" alt="main img" className=' shadow-[0_14px_44px_#3f80fd14,0_18px_84px_#14142b2b]  tansition-apply absolute lg:rounded-[50px] rounded-[40px] lg:w-3/4 w-9/12 h-[50vw] lg:h-4/6 ml-0 mr-auto lg:top-36 top-28' />
+            <img src="/aboutPic4.jpeg" alt="Our story image" className=' shadow-[0_14px_44px_#3f80fd14,0_18px_84px_#14142b2b] lg:rounded-[50px] rounded-[40px] lg:w-3/4 w-9/12 h-[50vw] lg:h-4/6 ml-0 mr-auto' />
+            <img src="/aboutPic7.webp" alt="Our story image" className=' shadow-[0_14px_44px_#3f80fd14,0_18px_84px_#14142b2b]  tansition-apply absolute lg:rounded-[50px] rounded-[40px] lg:w-3/4 w-9/12 h-[50vw] lg:h-4/6 ml-0 mr-auto lg:top-36 top-28' />
           </div>
           <div id="left" className="pl-6 flex mt-32 lg:m-0 flex-col justify-center relative">
           <p id="about-us" className="relative text-[#00cc88] pl-9 font-semibold" > Our story </p> 

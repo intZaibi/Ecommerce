@@ -1,59 +1,58 @@
-Ecommerce Web Application
+# Ecommerce Web Application
 A full-stack ecommerce web application built using Next.js for the frontend, MySQL for the database, and Cloudinary for image storage. The application includes essential ecommerce functionalities such as product management, user authentication, a shopping cart, and Stripe integration for payments.
 
-Table of Contents
-Features
-Tech Stack
-Installation
-Environment Variables
-Database Setup
-Running the Project
-Folder Structure
-API Endpoints
-Testing
-Deployment
-Contributing
-License
-Features
-User registration and authentication (Firebase)
-Admin dashboard for managing products and orders
-CRUD operations for products
-File upload integration with Cloudinary
-Shopping cart with localStorage
-Secure payments with Stripe
-Order management system for users and admins
-Responsive design with Tailwind CSS
-Tech Stack
-Frontend
+## Table of Contents
+- Features
+- Tech Stack
+- Installation
+- Environment Variables
+- Database Setup
+- Running the Project
+- Folder Structure
+- API Endpoints
+- Testing
+- Deployment
+- Contributing
+- License
+## Features
+- User registration and authentication (Firebase)
+- Admin dashboard for managing products and orders
+- CRUD operations for products
+- File upload integration with Cloudinary
+- Shopping cart with localStorage
+- Secure payments with Stripe
+- Order management system for users and admins
+- Responsive design with Tailwind CSS
+## Tech Stack
+### Frontend
 
-Next.js - React Framework
-Tailwind CSS - Utility-first CSS framework
-React Toastify - Notifications
-Backend
+- Next.js - React Framework
+- Tailwind CSS - Utility-first CSS framework
+- React Toastify - Notifications
+### Backend
 
-MySQL - Database
-Next.js API Routes - API backend
-Cloudinary - Image storage and delivery
+- MySQL - Database
+- Next.js API Routes - API backend
+- Cloudinary - Image storage and delivery
 Payment
 
-Stripe - Payment processing
-Installation
-Clone the repository:
+- Stripe - Payment processing
+## Installation
+### Clone the repository:
 
-bash
-Copy code
+```bash
 git clone https://github.com/intZaibi/Ecommerce.git
 cd Ecommerce
-Install the dependencies:
+```
+### Install the dependencies:
 
-bash
-Copy code
+```bash
 npm install
-Create a .env.local file based on .env.example and add the required environment variables (see below).
+```
+### Create a .env.local file based on .env.example and add the required environment variables (see below).
 
-Environment Variables
-bash
-Copy code
+- Environment Variables
+``` bash
 DATABASE_URL=mysql://user:password@localhost:3306/ecommerce_db
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
@@ -62,14 +61,15 @@ STRIPE_SECRET_KEY=your_stripe_secret_key
 STRIPE_PUBLIC_KEY=your_stripe_public_key
 NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-Database Setup
+```
+- Database Setup\
 Ensure MySQL is installed.
 
-Create a new MySQL database:
-
-bash
-Copy code
+*Create a new MySQL database:*
+```bash
 CREATE DATABASE ecommerce;
+
+```
 Run database migrations:
 
 bash
@@ -140,3 +140,5 @@ Push to the branch (git push origin feature-branch).
 Open a pull request.
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+[MIT](https://choosealicense.com/licenses/mit/)

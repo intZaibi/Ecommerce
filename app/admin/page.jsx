@@ -40,6 +40,7 @@ export default function Dashboard() {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/adminOrders`, { method: 'GET', cache: 'no-store' });
       let data = await res.json()
+      console.log(data.orders);
       setOrders(data.orders);
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/client`, { method: 'GET', cache: 'no-store' });
       data = await response.json()

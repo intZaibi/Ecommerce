@@ -40,14 +40,13 @@ export default function Dashboard() {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/adminOrders`, { method: 'GET', cache: 'no-store' });
       let data = await res.json()
-      console.log(data.orders);
-      setOrders(data.orders);
+      setOrders(data?.orders);
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/client`, { method: 'GET', cache: 'no-store' });
       data = await response.json()
-      setProducts(data.result);
+      setProducts(data?.result);
       const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/allUsers`, {method: 'GET', cache: 'no-store'});
       data = await resp.json()
-      setUsers(data.users.length);
+      setUsers(data?.users?.length);
     } catch (error) {
       console.log(error);
     } finally {
@@ -86,7 +85,7 @@ export default function Dashboard() {
             Total Orders
           </h1>
           <p className='mt-3 text-gray-600'>
-            {orders.length} | placed orders
+            {orders?.length} | placed orders
           </p>
           
           <Link href="/admin/orders" className='py-2 px-4 self-start mt-4 bg-blue-300 shadow-[0_8px_20px_#080f342a] hover:bg-blue-400 duration-200 rounded-xl text-white'>
@@ -98,7 +97,7 @@ export default function Dashboard() {
             Total Sales
           </h1>
           <p className='mt-3 text-gray-600'>
-            {((orders.reduce((acc, order) => acc + parseFloat(order.amount_total), 0))/100).toFixed(2)} | total revenue
+            {((orders?.reduce((acc, order) => acc + parseFloat(order?.amount_total), 0))/100)?.toFixed(2)} | total revenue
           </p>
           
         </div>
@@ -127,8 +126,8 @@ export default function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {orders.map(({ id, customer_email, created_at, product_data, amount_total, Status }, index) => {
-                const isLast = index === orders.length - 1;
+            {orders?.map(({ id, customer_email, created_at, product_data, amount_total, Status }, index) => {
+                const isLast = index === orders?.length - 1;
                 const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
                 const productsNames = product_data?.map((item) => {
                   return item.description

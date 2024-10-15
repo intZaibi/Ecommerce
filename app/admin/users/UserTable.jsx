@@ -81,13 +81,13 @@ export default function DefaultTable() {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    {address.slice(1, 5).join(", ")}
+                    {address?.slice(1, 5).join(", ")}
                   </td>
                   <td className={classes}>
-                    {address.slice(5, 6).join(", ")}
+                    {address?.slice(5, 6).join(", ")}
                   </td>
                   <td className={classes}>
-                    {address.slice(6, 7).join(", ")}
+                    {address?.slice(6, 7).join(", ")}
                   </td>
                 </tr>
               );

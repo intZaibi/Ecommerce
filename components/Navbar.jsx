@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Bars3Icon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,6 +10,7 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import Cart from "./Cart";
 import { useContext } from 'react';
 import { CartContext } from '@/app/context/CartContext';
+import MenuBar from "./MenuBar";
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,10 +33,13 @@ export default function Example() {
   
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
-
+  
+  const openMenu = () => setIsMuneOpen(true);
+  const closeMenu = () => setIsMenuOpen(false);
+  
   return (
     <>
-    <header className="top-5 lg:top-8 z-10 fixed px-2 lg:px-auto w-full">
+    <header className="top-5 lg:top-8 z-20 fixed px-2 lg:px-auto w-full">
       <nav className="flex justify-between items-center bg-white shadow-[0_8px_20px_#080f340f] mx-auto px-7 lg:px-8 py-3 rounded-full max-w-6xl">
         <div id="logo" className="px-4 flex">
           <Link href="/" className="-m-1.5 p-1.5">
@@ -168,19 +172,33 @@ export default function Example() {
 
         <div
           id="menuBarIcon"
-          className="flex justify-center lg:hidden bg-[#00cc89] shadow-[0_8px_18px_#00cc897a] rounded-full w-10 h-10 text-white cursor-pointer"
+          className="flex justify-center lg:hidden md:hidden bg-[#00cc89] shadow-[0_8px_18px_#00cc897a] rounded-full w-10 h-10 text-white cursor-pointer"
         >
+          {mobileMenuOpen ? (
+            <button
+            type="button"
+            onClick={() => setMobileMenuOpen(false)}
+            className="inline-flex justify-center items-center -m-2.5 p-2.5 rounded-md"
+          >
+            <XMarkIcon aria-hidden="true" className="w-6 h-6" />
+          </button>
+          ):(
           <button
             type="button"
-            onClick={() => setMobileMenuOpen(true)}
+            onClick={() => {
+              setMobileMenuOpen(true);
+              console.log("clicked...")
+            }}
             className="inline-flex justify-center items-center -m-2.5 p-2.5 rounded-md"
           >
             <Bars3Icon aria-hidden="true" className="w-6 h-6" />
           </button>
+          )}
         </div>
       </nav>
     </header>
     <Cart IsCartOpen={IsCartOpen} closeCart={closeCart}/>
+    <MenuBar mobileMenuOpen={mobileMenuOpen} />
     </>
   );
 }

@@ -12,11 +12,9 @@ A full-stack ecommerce web application built using Next.js for the frontend, MyS
 - API Endpoints
 - Testing
 - Deployment
-- Contributing
-- License
 ## Features
 - User registration and authentication (Firebase)
-- Admin dashboard for managing products and orders
+- Admin dashboard for managing products, orders and users
 - CRUD operations for products
 - File upload integration with Cloudinary
 - Shopping cart with localStorage
@@ -29,14 +27,16 @@ A full-stack ecommerce web application built using Next.js for the frontend, MyS
 - Next.js - React Framework
 - Tailwind CSS - Utility-first CSS framework
 - React Toastify - Notifications
+- Material Tailwind
+- Material Icons, Font Awesome, React Icons etc 
 ### Backend
 
 - MySQL - Database
 - Next.js API Routes - API backend
-- Cloudinary - Image storage and delivery
-Payment
+- Cloudinary - Image storage
 
 - Stripe - Payment processing
+- Stripe Webhooks - Payments record and orders tracking
 ## Installation
 ### Clone the repository:
 
@@ -67,78 +67,107 @@ Ensure MySQL is installed.
 
 *Create a new MySQL database:*
 ```bash
-CREATE DATABASE ecommerce;
+CREATE TABLE allproducts (
+    ProductID INT AUTO_INCREMENT PRIMARY KEY,
+    ProductName VARCHAR(255) NOT NULL,
+    CategoryID INT,
+    Price DECIMAL(10,2) NOT NULL,
+    ImageURLs JSON,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (CategoryID) REFERENCES categories(CategoryID)
+);
+
+CREATE TABLE categories (
+    CategoryID INT AUTO_INCREMENT PRIMARY KEY,
+    CategoryName VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE contactform (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(255) UNIQUE NOT NULL,
+    Phone VARCHAR(20),
+    Objective VARCHAR(200),
+    Message TEXT NOT NULL,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_email VARCHAR(255) NOT NULL,
+    product_data JSON NOT NULL,
+    amount_total DECIMAL(10,2) NOT NULL,
+    Status VARCHAR(45) DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE specifications (
+    ProductID INT,
+    Storage JSON,
+    RAM JSON,
+    Color JSON,
+    FOREIGN KEY (ProductID) REFERENCES allproducts(ProductID)
+);
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    address JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 ```
-Run database migrations:
 
-bash
-Copy code
-npm run migrate
-Optionally, seed the database with initial data:
-
-bash
-Copy code
-npm run seed
 Running the Project
+
 Start the development server:
 
-bash
-Copy code
+```bash
 npm run dev
+```
 The app will be available at http://localhost:3000.
 
 To build the project for production:
 
-bash
-Copy code
+```bash
 npm run build
 npm start
-Folder Structure
-plaintext
-Copy code
-/components      # Reusable React components
-/pages           # Next.js pages (API routes and frontend pages)
-/public          # Static files (images, fonts, etc.)
-/styles          # Global styles and Tailwind CSS configuration
-/lib             # Utility functions (e.g., Cloudinary, Stripe integration)
-/db              # Database configuration and migration scripts
-API Endpoints
-Product Management
-GET /api/products - Retrieve all products
-POST /api/products - Add a new product (Admin only)
-PUT /api/products/:id - Update a product (Admin only)
-DELETE /api/products/:id - Delete a product (Admin only)
-User Authentication
-POST /api/auth/register - Register a new user
-POST /api/auth/login - Log in an existing user
-POST /api/auth/logout - Log out a user
-Cart
-POST /api/cart - Add a product to the cart
-GET /api/cart - Retrieve the cart details
-Testing
+```
+## Folder Structure:
+
+/components      # Reusable React components\
+/pages           # Next.js pages (API routes and frontend pages)\
+/public          # Static files (images, fonts, etc.)\
+/styles          # Global styles and Tailwind CSS configuration\
+/lib             # Utility functions (e.g., Cloudinary, Stripe integration)\
+/db              # Database configuration and migration scripts\
+## API Endpoints
+- Product Management
+GET /api/products - Retrieve all products\
+POST /api/products - Add a new product (Admin only)\
+PUT /api/products/:id - Update a product (Admin only)\
+DELETE /api/products/:id - Delete a product (Admin only)\
+- User Authentication
+POST /api/auth/register - Register a new user\
+POST /api/auth/login - Log in an existing user\
+POST /api/auth/logout - Log out a user\
+- Cart
+POST /api/cart - Add a product to the cart\
+GET /api/cart - Retrieve the cart details\
+- Testing
 To run tests for this project:
 
-bash
-Copy code
+```bash
 npm run test
-Deployment
-This project can be deployed on Vercel. After configuring your environment variables and installing dependencies, deploy using the following command:
+```
+## Deployment
 
-bash
-Copy code
-vercel
-Alternatively, it can be deployed on any platform that supports Next.js.
+This project is deployed on Vercel.
 
-Contributing
-Contributions are welcome! To contribute:
+https://vercel.live/link/ecommerce-eight-mocha.vercel.app
 
-Fork the repository.
-Create a feature branch (git checkout -b feature-branch).
-Commit your changes (git commit -m 'Add new feature').
-Push to the branch (git push origin feature-branch).
-Open a pull request.
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+# Copyright
 
-[MIT](https://choosealicense.com/licenses/mit/)
+Copyright @intZaibi -2024

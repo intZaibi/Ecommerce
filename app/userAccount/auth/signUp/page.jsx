@@ -35,6 +35,7 @@ export default function SignUp() {
       setLoading(false);
       router.push('./signIn');
     } catch (err) {
+      console.log("Error: ", err)
       setError(err.message);
       setLoading(false);
     }

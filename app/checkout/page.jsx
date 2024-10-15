@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useContext } from 'react';
 import { CartContext } from '@/app/context/CartContext';
 import axios from "axios";
+import { toast } from "react-toastify";
 
 
 export default function PreviewPage() {
@@ -21,6 +22,9 @@ export default function PreviewPage() {
     }
     catch (err){
       console.log(err)
+      if(err.toString().include("cents")){
+        toast.error("Price is too low. Please increase the quantity!")
+      }
     }
   }
 

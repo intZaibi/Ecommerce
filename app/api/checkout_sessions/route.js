@@ -43,6 +43,6 @@ export async function POST(req, res) {
 
     } catch (err) {
       console.error('Error creating Stripe session', err);
-      return NextResponse.json({ message: 'failed' }, { status: 500 });
+      return NextResponse.json({ error: err }, { status: 500 });
     }
 }

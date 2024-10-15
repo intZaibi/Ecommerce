@@ -18,7 +18,7 @@ export async function POST(req, res) {
                   name: item.ProductName,
                   images: [item.ImageURLs[0]],
                 },
-                currency: 'PKR',
+                currency: 'USD',
                 unit_amount: item.Price * 100,
               },
               adjustable_quantity : {

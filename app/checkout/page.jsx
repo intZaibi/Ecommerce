@@ -22,9 +22,6 @@ export default function PreviewPage() {
     }
     catch (err){
       console.log(err)
-      if(err.toString().include("cents")){
-        toast.error("Price is too low. Please increase the quantity!")
-      }
     }
   }
 

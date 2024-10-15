@@ -65,7 +65,7 @@ export const CartProvider = ({ children }) => {
   
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cart');
-    if (storedCartItems) {
+    if (storedCartItems && isMountedOnce) {
       setCartItems(JSON.parse(storedCartItems));
     }
     setIsMountedOnce(true)

@@ -98,7 +98,7 @@ export default function DefaultTable() {
                 const productsNames = product_data?.map((item) => {
                   return item.description
                 });
-                const dateTime = created_at.toString().split("T")[1].split(".")[0].substr(0, created_at.toString().split("T")[1].split(".")[0].length-3) + ", " + created_at.toString().split("T")[0]
+                const dateTime = created_at?.toString().split("T")[1].split(".")[0].substr(0, created_at?.toString().split("T")[1].split(".")[0].length-3) + ", " + created_at?.toString().split("T")[0]
                 const productQuantity = product_data?.map((item) => {
                   return item.quantity
                 });

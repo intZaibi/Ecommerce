@@ -81,31 +81,13 @@ export default function DefaultTable() {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    {address?.map((item, i) => {
-                      if( i !== 0 && i !== address.length -1 && i !== address.length -2 ) {
-                        return (
-                          <> {item + ", "} </>
-                    )} else if(i === address.length -2){
-                      return (
-                        <> {item} </>
-                    )}
-                    })}
+                    {address.slice(1, 5).join(", ")}
                   </td>
                   <td className={classes}>
-                    {address?.map((item, i) => {
-                      if( i === address.length -2 ) 
-                        return (
-                          <> {item} </>
-                    )
-                    })}
+                    {address.slice(5, 6).join(", ")}
                   </td>
                   <td className={classes}>
-                    {address?.map((item, i) => {
-                      if( i === address.length -1 ) 
-                        return (
-                          <> {item} </>
-                    )
-                    })}
+                    {address.slice(6, 7).join(", ")}
                   </td>
                 </tr>
               );

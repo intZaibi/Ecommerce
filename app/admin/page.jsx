@@ -39,11 +39,14 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/adminOrders`, { method: 'GET', cache: 'no-store' });
-      setOrders(res.data.orders);
+      let data = await res.json()
+      setOrders(data.orders);
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/client`, { method: 'GET', cache: 'no-store' });
-      setProducts(response.data.result);
+      data = await response.json()
+      setProducts(data.result);
       const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/allUsers`, {method: 'GET', cache: 'no-store'});
-      setUsers(resp.data.users.length);
+      data = await resp.json()
+      setUsers(data.users.length);
     } catch (error) {
       console.log(error);
     } finally {

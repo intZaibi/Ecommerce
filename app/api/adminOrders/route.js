@@ -5,6 +5,7 @@ export async function GET() {
 
   try {
     const [orders] = await db.query(`SELECT * FROM orders`);
+    console.log(orders)
 
       return NextResponse.json({ orders }, { status: 200 });
   } catch (error) {

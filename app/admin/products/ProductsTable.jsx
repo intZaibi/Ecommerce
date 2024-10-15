@@ -43,7 +43,6 @@ export default function ProductTable() {
         );
         setProducts(res.data.result);
         console.log(res.data.result);
-        toast("Please zoom-out for better table view")
       } catch (err) {
         console.log("Error:", err.response);
       }
@@ -65,7 +64,6 @@ export default function ProductTable() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // console.log(value.split(',').map(item => item.trim()))
     const arrValue = [value];
     if (name === "Storage" || name === "RAM" || name === "Color") {
       setNewProduct({ ...newProduct, [name]: arrValue });
@@ -157,7 +155,7 @@ export default function ProductTable() {
         Color,
       };
 
-      const res = await axios.post(
+      await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/Allproducts/admin`,
         formData
       );
@@ -222,7 +220,7 @@ export default function ProductTable() {
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-b border-blue-gray-100 bg-blue-gray-50 px-8 py-4"
+                  className="border-b border-blue-gray-100 text-center bg-blue-gray-50 px-2 py-4"
                 >
                   {head}
                 </th>
@@ -294,10 +292,10 @@ export default function ProductTable() {
                     }
                   };
                   return (
-                    <tr key={ProductID}>
-                      <td className="p-4 lg:w-3">{ProductName}</td>
-                      <td className="p-4 text-center">${Price}</td>
-                      <td className="p-4 flex gap-1">
+                    <tr key={ProductID} className="gap-0">
+                      <td className="py-4 px-4 text-balance lg:w-0">{ProductName}</td>
+                      <td className="py-4 px-2 text-center lg:w-0">${Price}</td>
+                      <td className="py-4 px-2 flex gap-1 lg:w-60 flex-wrap">
                         {ImageURLs?.length > 0 ? (
                           ImageURLs.map((img, i) => (
                             <img
@@ -315,13 +313,13 @@ export default function ProductTable() {
                           <span>No ImageURL</span>
                         )}
                       </td>
-                      <td className="p-4 text-center lg:w-3">{ProductID}</td>
-                      <td className="p-4 text-center">
+                      <td className="py-4 px-2 text-center lg:w-0">{ProductID}</td>
+                      <td className="py-4 px-2 text-center lg:w-0">
                         {CategoryName(CategoryID)}
                       </td>
-                      <td className="p-4 text-center">{Storage.toString()}</td>
-                      <td className="p-4 text-center">{RAM.toString()}</td>
-                      <td className="p-4 text-center">{Color.toString()}</td>
+                      <td className="py-4 px-2 text-center">{Storage.toString()}</td>
+                      <td className="py-4 px-2 text-center">{RAM.toString()}</td>
+                      <td className="py-4 px-2 text-center">{Color.toString()}</td>
                       <td className="space-x-2">
                         <button
                           onClick={() => {

@@ -29,7 +29,8 @@ export default function SignUp() {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/signUp`, {email})
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/signUp`, {email})
+      console.log(res)
       toast.success('Sign up successful!');
       setLoading(false);
       router.push('./signIn');

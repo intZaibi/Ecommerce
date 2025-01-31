@@ -44,7 +44,7 @@ export default function Cart({ IsCartOpen, closeCart }) {
 
   return (
     <div
-      className={`fixed h-[100vh] ${IsCartOpen ? "translate-x-[0]" : "translate-x-[550px]"} overflow-hidden duration-500 ease-out scrollbar overflow-y-scroll z-10 min-w-[30vw] py-14 px-2 shadow-[0_8px_20px_#080f342f] bg-[#fcfcfc] top-0 right-0 min-h-screen`}
+      className={`fixed h-[100vh] ${IsCartOpen ? "translate-x-[0]" : "translate-x-[550px]"} overflow-hidden duration-500 ease-out scrollbar overflow-y-scroll z-30 min-w-[30vw] py-14 px-2 shadow-[0_8px_20px_#080f342f] bg-[#fcfcfc] top-0 right-0 min-h-screen`}
     >
       <div className="flex justify-between px-5 items-center">
         <h1 className="text-2xl font-bold">Your Cart</h1>

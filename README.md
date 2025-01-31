@@ -53,14 +53,16 @@ npm install
 
 - Environment Variables
 ``` bash
-DATABASE_URL=mysql://user:password@localhost:3306/ecommerce_db
-CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+DB_PORT=db_port
+DB_NAME=db_name
+DB_PASSWORD=db_password
+DB_USER=db_username
+DB_HOST=db_url
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_public_key
+SESSION_SECRET=your_secret_key
 STRIPE_SECRET_KEY=your_stripe_secret_key
-STRIPE_PUBLIC_KEY=your_stripe_public_key
-NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret_key
 ```
 - Database Setup\
 Ensure MySQL is installed.

@@ -44,7 +44,7 @@ export default function Example() {
         <div id="logo" className="px-4 flex">
           <Link href="/" className="-m-1.5 p-1.5">
             <span id="arrow" className="sr-only">Your Company</span>
-            <img alt="" src="/logo.png" className="w-auto h-10" />
+            <img alt="" src="/logo.png" className="w-auto h-20" />
           </Link>
         </div>
 

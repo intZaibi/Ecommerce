@@ -14,7 +14,7 @@ export default function Footer() {
                 <span className="sr-only">Your Company</span>
                 <img
                   alt=""
-                  src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+                  src="https://loopix.net/cdn/shop/files/IMG_0072.png?v=1732586894&width=135"
                   className="w-16 h-16"
                 />
               </Link>

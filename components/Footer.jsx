@@ -14,7 +14,7 @@ export default function Footer() {
                 <span className="sr-only">Your Company</span>
                 <img
                   alt=""
-                  src="../public/logo.png"
+                  src="public/logo.png"
                   className="w-16 h-16"
                 />
               </Link>

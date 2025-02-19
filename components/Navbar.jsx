@@ -44,7 +44,7 @@ export default function Example() {
         <div id="logo" className="px-4 flex">
           <Link href="/" className="-m-1.5 p-1.5">
             <span id="arrow" className="sr-only">Your Company</span>
-            <img alt="" src="https://loopix.net/cdn/shop/files/IMG_0072.png?v=1732586894&width=135" className="w-auto h-10" />
+            <img alt="" src="../public/logo.png" className="w-auto h-10" />
           </Link>
         </div>
 

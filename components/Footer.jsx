@@ -14,7 +14,7 @@ export default function Footer() {
                 <span className="sr-only">Your Company</span>
                 <img
                   alt=""
-                  src="https://loopix.net/cdn/shop/files/IMG_0072.png?v=1732586894&width=135"
+                  src="../public/logo.png"
                   className="w-16 h-16"
                 />
               </Link>

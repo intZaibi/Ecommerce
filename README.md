@@ -1,5 +1,5 @@
 # Ecommerce Web Application
-A full-stack ecommerce web application built using Next.js for the frontend, MySQL for the database, and Cloudinary for image storage. The application includes essential ecommerce functionalities such as product management, user authentication, a shopping cart, and Stripe integration for payments.
+A full-stack ecommerce web application built using Next.js as for the tech stack, MySQL for the database, and Cloudinary for image storage. The application includes essential ecommerce functionalities such as product management, user authentication, a shopping cart, and Stripe integration for payments.
 
 ## Table of Contents
 - Features
